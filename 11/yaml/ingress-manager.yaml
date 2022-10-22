@@ -1,0 +1,76 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  creationTimestamp: null
+  name: ingress-manager-sa
+  namespace: default
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: ingress-manager-role
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - ingresses
+  verbs:
+  - list
+  - watch
+  - create
+  - update
+  - delete
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  creationTimestamp: null
+  name: ingress-manager-rb
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ingress-manager-role
+subjects:
+- kind: ServiceAccount
+  name: ingress-manager-sa
+  namespace: default
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ingress-manager
+  name: ingress-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ingress-manager
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ingress-manager
+    spec:
+      serviceAccountName: ingress-manager-sa
+      containers:
+      - image: liyuxuan89/ingress-manager:1.0.0
+        name: ingress-manager
+        resources: {}
+status: {}
