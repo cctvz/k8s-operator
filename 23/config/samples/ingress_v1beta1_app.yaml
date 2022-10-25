@@ -1,0 +1,6 @@
+apiVersion: ingress.my.domain/v1beta1
+kind: App
+metadata:
+  name: app-sample
+spec:
+  # TODO(user): Add fields here
