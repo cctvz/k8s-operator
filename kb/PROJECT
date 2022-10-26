@@ -1,0 +1,16 @@
+domain: liyuxuan.tech
+layout:
+- go.kubebuilder.io/v3
+projectName: kb
+repo: github.com/liyuxuan/k8s-operator/kb
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: liyuxuan.tech
+  group: ingress
+  kind: App
+  path: github.com/liyuxuan/k8s-operator/kb/api/v1beta1
+  version: v1beta1
+version: "3"

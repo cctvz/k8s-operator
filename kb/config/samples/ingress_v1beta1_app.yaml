@@ -1,0 +1,9 @@
+apiVersion: ingress.liyuxuan.tech/v1beta1
+kind: App
+metadata:
+  name: app-sample
+spec:
+  image: nginx:latest
+  replicas: 2
+  enable_ingress: true
+  enable_service: true
